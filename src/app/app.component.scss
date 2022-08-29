@@ -1,0 +1,60 @@
+.app-frame {
+  width: 300px;
+  height: 500px;
+  border: 1px solid gray;
+  margin: 100px;
+  position: relative;
+
+
+
+  app-display {
+    position: absolute;
+    left: 5%;
+    top: 5%;
+    right: 5%;
+    border: 1px solid red;
+    font-size: 20px;
+    height: 1.8em;
+  }
+
+  .num-pad {
+    position: absolute;
+    left: 5%;
+    top: 15%;
+    right: 5%;
+    bottom: 32.5%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+
+    num-button {
+      width: 22.5%;
+      height: 23%;
+      margin: 5%;
+    }
+  }
+
+  .action-buttons {
+    position: absolute;
+    left: 40%;
+    right: 15%;
+    bottom: 2%;
+
+    width: 51.5%;
+    height: 12%;
+
+    display: flex;
+
+    call-button {
+      width: 39%;
+    }
+    back-button {
+      margin-top: 10%;
+      margin-left: 17%;
+      width: 40%;
+    }
+  }
+}
