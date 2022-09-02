@@ -4,7 +4,7 @@ jobs:
   Hello-World-Github-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "イベントトリガー : ${{ github.event_name}}"
+      - run: echo "イベントトリガー : ${{ github.event_name }}"
       - run: echo "実行環境 : ${{ runner.os }}"
       - run: echo "ブランチ : ${{ github.ref }} @ ${{ github.repository }}"
       - name: ファイルのチェックアウト
