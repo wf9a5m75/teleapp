@@ -1,0 +1,14 @@
+name: CI/CD for the application
+on: [push]
+jobs:
+  Hello-World-Github-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "イベントトリガー : ${{ github.event_name}}"
+      - run: echo "実行環境 : ${{ runner.os }}"
+      - run: echo "ブランチ : ${{ github.ref }} @ ${{ github.repository }}"
+      - name: ファイルのチェックアウト
+        uses: actions/checkout@v3
+      - name: レポジトリ内のファイル
+        run: |
+          ls ${{ github.workspace }}
