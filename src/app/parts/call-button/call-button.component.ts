@@ -8,19 +8,19 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class CallButton {
 
   bgColor: string = "";
-  _enabled: boolean = false;
+  _enable: boolean = false;
 
   @Output()
   btnClick: EventEmitter<string> = new EventEmitter<string>();
 
   @Input()
-  public get enabled(): boolean {
-    return this._enabled;
+  public get enable(): boolean {
+    return this._enable;
   }
 
-  public set enabled(value: boolean) {
+  public set enable(value: boolean) {
     this.bgColor = value ? "" : "disabled";
-    this._enabled = value;
+    this._enable = value;
   }
 
   click(): void {

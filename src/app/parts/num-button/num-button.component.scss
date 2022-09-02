@@ -19,3 +19,7 @@ button:active {
 .click {
   background: #AAA;
 }
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}

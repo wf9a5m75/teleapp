@@ -4,21 +4,21 @@
     <app-display></app-display>
   </div>
   <div class="num-pad">
-    <num-button [value]="'1'"></num-button>
-    <num-button [value]="'2'"></num-button>
-    <num-button [value]="'3'"></num-button>
-    <num-button [value]="'4'"></num-button>
-    <num-button [value]="'5'"></num-button>
-    <num-button [value]="'6'"></num-button>
-    <num-button [value]="'7'"></num-button>
-    <num-button [value]="'8'"></num-button>
-    <num-button [value]="'9'"></num-button>
-    <num-button [value]="'*'"></num-button>
-    <num-button [value]="'0'"></num-button>
-    <num-button [value]="'#'"></num-button>
+    <num-button [value]="'1'" [enable]="buttonEnables['1']"></num-button>
+    <num-button [value]="'2'" [enable]="buttonEnables['2']"></num-button>
+    <num-button [value]="'3'" [enable]="buttonEnables['3']"></num-button>
+    <num-button [value]="'4'" [enable]="buttonEnables['4']"></num-button>
+    <num-button [value]="'5'" [enable]="buttonEnables['5']"></num-button>
+    <num-button [value]="'6'" [enable]="buttonEnables['6']"></num-button>
+    <num-button [value]="'7'" [enable]="buttonEnables['7']"></num-button>
+    <num-button [value]="'8'" [enable]="buttonEnables['8']"></num-button>
+    <num-button [value]="'9'" [enable]="buttonEnables['9']"></num-button>
+    <num-button [value]="'*'" [enable]="buttonEnables['*']"></num-button>
+    <num-button [value]="'0'" [enable]="buttonEnables['0']"></num-button>
+    <num-button [value]="'#'" [enable]="buttonEnables['#']"></num-button>
   </div>
   <div class="action-buttons">
-    <call-button [enabled]="enableCallButton"></call-button>
-    <back-button></back-button>
+    <call-button [enable]="buttonEnables['call']"></call-button>
+    <back-button [enable]="buttonEnables['back']"></back-button>
   </div>
 </div>
