@@ -4,9 +4,9 @@ jobs:
   Hello-World-Github-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Event trigger : ${{ github.event_name }}"
-      - run: echo "OS : ${{ runner.os }}"
-      - run: echo "Branch : ${{ github.ref }} @ ${{ github.repository }}"
+      - run: echo "[Event trigger]  ${{ github.event_name }}"
+      - run: echo "[OS]  ${{ runner.os }}"
+      - run: echo "[Branch] ${{ github.ref }} @ ${{ github.repository }}"
 
       - name: Check out the repository
         uses: actions/checkout@v3
