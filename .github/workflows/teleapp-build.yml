@@ -4,11 +4,13 @@ jobs:
   Hello-World-Github-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "イベントトリガー : ${{ github.event_name }}"
-      - run: echo "実行環境 : ${{ runner.os }}"
-      - run: echo "ブランチ : ${{ github.ref }} @ ${{ github.repository }}"
-      - name: ファイルのチェックアウト
+      - run: echo "Event trigger : ${{ github.event_name }}"
+      - run: echo "OS : ${{ runner.os }}"
+      - run: echo "Branch : ${{ github.ref }} @ ${{ github.repository }}"
+
+      - name: Check out the repository
         uses: actions/checkout@v3
-      - name: レポジトリ内のファイル
+
+      - name: List up the files
         run: |
           ls ${{ github.workspace }}
