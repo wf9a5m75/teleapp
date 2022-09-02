@@ -1,10 +1,14 @@
-.triangle-left {
-  display: inline-block;
-  border-style: solid;
-  border-width: 14px 24px 14px 0;
-  border-color: transparent #000 transparent transparent;
+.click {
+  fill: #AAA !important;
 }
 
-.click {
+svg polygon {
+  fill: #ccc;
+  stroke: rgb(0, 0, 0);
+}
+svg:hover polygon {
+  fill: #ddd !important;
+}
+svg:active polygon {
   fill: #AAA !important;
 }

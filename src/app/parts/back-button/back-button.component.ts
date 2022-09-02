@@ -11,14 +11,35 @@ export class BackButton {
 
   value: string = "Backspace";
 
+  touchStartTime: number = 0;
+
   @Output()
   btnClick: EventEmitter<string> = new EventEmitter<string>();
 
-  click(): void {
-    this.btnClick.emit("Backspace");
+  @Output()
+  btnLongClick: EventEmitter<string> = new EventEmitter<string>();
+
+  mousedown(): void {
+    this.touchStartTime = Date.now();
     this.bgColor = "click";
-    setTimeout(() => {
-      this.bgColor = "";
-    }, 100);
+  }
+
+  mouseup(): void {
+    this.bgColor = "";
+    if (Date.now() - this.touchStartTime >= 1500) {
+      this.btnLongClick.emit("LongBackspace");
+    } else {
+      this.btnClick.emit("Backspace");
+    }
+    this.touchStartTime = 0;
+  }
+  touchcancel(): void {
+    this.bgColor = "";
+    this.touchStartTime = 0;
+  }
+
+  click(): void {
+    this.mousedown();
+    setTimeout(() => this.mouseup(), 100);
   }
 }

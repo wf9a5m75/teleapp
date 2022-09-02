@@ -28,6 +28,7 @@ class TrieNode {
     return `(${this.value}: ${this.eow} : [${this.children}])`;
   }
 
+
 }
 
 @Component({
@@ -89,6 +90,7 @@ export class Display  {
 
     this.addException("047[05][2-8]", "dddd-dd-dddd");
     this.addException("0[5789]0", "ddd-dddd-dddd");
+    this.addException("0220[2-9]", "dddd-dd-dddd");
     this.addException("0223[23]", "dddd-dd-dddd");
     this.addException("0255[78]", "dddd-dd-dddd");
     this.addException("0256[2-9]", "dddd-dd-dddd");
@@ -145,7 +147,6 @@ export class Display  {
   }
 
   public formatNumber(value: string): string {
-    this._value = value;
 
     let result: string[] = [];
     let hitException: boolean = false;
@@ -251,7 +252,7 @@ export class Display  {
   }
 
   public set value(value: string) {
-    this.formatNumber(value);
+    this._value = this.formatNumber(value);
   }
 
   onKeyDown(event: KeyboardEvent) {

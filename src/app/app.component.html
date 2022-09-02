@@ -1,5 +1,8 @@
 <div class="app-frame">
-  <app-display></app-display>
+  <div class="displayFrame">
+    <div class="warnMessage" *ngIf="showWarnMessage">無効な電話番号です</div>
+    <app-display></app-display>
+  </div>
   <div class="num-pad">
     <num-button [value]="'1'"></num-button>
     <num-button [value]="'2'"></num-button>
@@ -15,7 +18,7 @@
     <num-button [value]="'#'"></num-button>
   </div>
   <div class="action-buttons">
-    <call-button></call-button>
+    <call-button [enabled]="enableCallButton"></call-button>
     <back-button></back-button>
   </div>
 </div>
