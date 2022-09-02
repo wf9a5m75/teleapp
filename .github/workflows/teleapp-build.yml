@@ -1,16 +1,16 @@
-name: CI/CD for the application
+name: Github Actions Hello World
 on: [push]
 jobs:
   Hello-World-Github-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "[Event trigger]  ${{ github.event_name }}"
-      - run: echo "[OS]  ${{ runner.os }}"
-      - run: echo "[Branch] ${{ github.ref }} @ ${{ github.repository }}"
+      - run: echo "イベントトリガー / ${{ github.event_name }}"
+      - run: echo "実行環境 / ${{ runner.os }}"
+      - run: echo "ブランチ / ${{ github.ref }} @ ${{ github.repository }}"
 
       - name: Check out the repository
         uses: actions/checkout@v3
 
-      - name: List up the files
+      - name: リポジトリ内のファイル
         run: |
           ls ${{ github.workspace }}
