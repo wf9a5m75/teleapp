@@ -21,9 +21,14 @@ export class NumButton {
     if (!this._enable) {
       return;
     }
+
+    // ダブルクリックを防ぐため、クリック処理中は入力を受け付けない
+    this._enable = false;
     this.btnClick.emit(this.value);
     this.bgColor = "click";
+
     setTimeout(() => {
+      this._enable = true;
       this.bgColor = "";
     }, 100);
   }

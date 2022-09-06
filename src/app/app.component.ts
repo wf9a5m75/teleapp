@@ -15,7 +15,7 @@ export class AppComponent implements AfterViewInit {
   @ViewChild(BackButton) backButton!: BackButton;
   @ViewChild(CallButton) callButton!: CallButton;
 
-  buttons: { [key: string]: NumButton | BackButton } = {};
+  buttons: { [key: string]: NumButton } = {};
   buttonEnables: { [key: string]: boolean } = {
     '0': true,
     '1': true,
@@ -29,8 +29,6 @@ export class AppComponent implements AfterViewInit {
     '9': false,
     '*': false,
     '#': false,
-    'call': false,
-    'back': false
   };
 
   inputs: string[] = [];
@@ -41,9 +39,11 @@ export class AppComponent implements AfterViewInit {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    const key: string = event.key as string;
+    const key: string = event.key!;
     if (key in this.buttons) {
       this.buttons[key].click();
+    } else if (key === 'Backspace') {
+      this.backButton.click();
     }
   }
 
@@ -54,14 +54,12 @@ export class AppComponent implements AfterViewInit {
       button.btnClick.subscribe(value => this.onButtonClick(value));
     });
 
-    this.buttons[this.backButton.value] = this.backButton;
     this.backButton.btnClick.subscribe(value => this.onButtonClick(value));
     this.backButton.btnLongClick.subscribe(value => this.onButtonClick(value));
     this.callButton.btnClick.subscribe(value => this.onCallButtonClick(value));
   }
   onCallButtonClick(value: any) {
-
-    console.log(`call`, this.inputs);
+    alert(`電話番号: ${this.inputs.join('')}`);
   }
 
   onButtonClick(value: any) {
@@ -87,7 +85,6 @@ export class AppComponent implements AfterViewInit {
     this.display.value = phoneNumber;
 
     const containSeparators: boolean = /^\d+\-\d+\-\d{4}$/.test(this.display.value);
-    console.log(containSeparators, this.display.value);
 
     this.buttonEnables['call'] =  /^1(04|13|15|17|19|77|59|89|10|16|18|71|36|88)$/.test(phoneNumber) ||
                               containSeparators && (

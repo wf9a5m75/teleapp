@@ -24,6 +24,9 @@ export class CallButton {
   }
 
   click(): void {
+    if (!this._enable) {
+      return;
+    }
     this.btnClick.emit("Call");
     this.bgColor = "click";
     setTimeout(() => {
