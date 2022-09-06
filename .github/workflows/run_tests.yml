@@ -2,6 +2,9 @@ name: Run unit tests
 on: [push]
 jobs:
   Run-Tests-Automatically:
+    defaults:
+      run:
+        working-directory: ng-toolkit
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository
@@ -12,4 +15,4 @@ jobs:
           node-version: 16
 
       - run: npm ci
-      - run: npm test
+      - run: npm run test:prod
