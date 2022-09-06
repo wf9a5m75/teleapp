@@ -44,7 +44,7 @@ export class BackButton {
       return;
     }
     this.bgColor = "";
-    if (Date.now() - this.touchStartTime >= 1500) {
+    if (Date.now() - this.touchStartTime >= 500) {
       this.btnLongClick.emit("LongBackspace");
     } else {
       this.btnClick.emit("Backspace");

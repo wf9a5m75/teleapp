@@ -1,0 +1,16 @@
+name: Run unit tests
+on: [push]
+jobs:
+  Run-Tests-Automatically:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - run: npm ci
+      - run: npm run test:prod
