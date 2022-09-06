@@ -1,7 +1,7 @@
-name: Run unit tests 
+name: Run unit tests
 on: [push]
 jobs:
-  Hello-World-Github-Actions:
+  Run-Tests-Automatically:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository
