@@ -1,0 +1,21 @@
+name: TelApp CI/CD
+on: [push]
+jobs:
+  Do-test-then-build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v3
+
+      - name: Node.js環境をセットアップ
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+
+      - name: 関係モジュールをインストール
+        run: npm ci
+
+      - name: テストを実行
+        run: npm run test:prod
