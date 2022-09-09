@@ -1,9 +1,13 @@
-name: TelApp CI/CD
-on: [workflow_dispatch]
+name: test trigger
+on:
+  workflow_dispatch:
 
 jobs:
   job1:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "Hello"
+      - uses: ./.github/workflows/auto-build.yml
+        id: auto-build
+
+      - run: echo "${{ steps.auto-build.outputs.build_result }}"
