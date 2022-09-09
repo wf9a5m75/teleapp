@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      build_result: ${{ steps.checkout.outputs.COMMIT_ID }}-build
+      BUILD_ID: ${{ steps.build.outputs.BUILD_ID }}
 
     steps:
       - name: リポジトリをチェックアウト
@@ -34,18 +34,21 @@ jobs:
         run: npm ci
 
       - name: テストを実行
-       run: npm run test:prod
+        run: npm run test:prod
 
       - name: アプリケーションをビルド
         id: build
         run: |
+          BUILD_ID="${{ steps.checkout.outputs.COMMIT_ID }}-build"
           PROJ_NAME=$(jq -r ".defaultProject" angular.json)
           OUT_DIR=$(jq -r ".projects.\"${PROJ_NAME}\".architect.build.options.outputPath")
           npm run build:prod
-          echo "::set-output name=OUT_DIR::${OUT_DIR}"
 
-      - name: ビルド結果をアーティファクトにアップロード
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ steps.checkout.outputs.COMMIT_ID }}-build
-          path: ${{ steps.build.outputs.OUT_DIR }}/*
+          echo "::set-output name=OUT_DIR::${OUT_DIR}"
+          echo "::set-output name=BUILD_ID::${BUILD_ID}"
+      #
+      # - name: ビルド結果をアーティファクトにアップロード
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: ${{ steps.build.outputs.BUILD_ID }}
+      #     path: ${{ steps.build.outputs.OUT_DIR }}/*

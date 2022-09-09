@@ -12,5 +12,4 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      - run: echo "${{ needs.job1.outputs.build_result }}"
+      - run: echo "BUILD_ID / ${{ needs.job1.outputs.BUILD_ID }}"
