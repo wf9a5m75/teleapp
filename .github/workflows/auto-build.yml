@@ -41,5 +41,5 @@ jobs:
       - name: ビルド結果をアーティファクトにアップロード
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ teps.checkout.outputs.COMMIT_ID }}-build
+          name: ${{ steps.checkout.outputs.COMMIT_ID }}-build
           path: ./public/
