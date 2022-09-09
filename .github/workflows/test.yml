@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: .github/workflows/auto-build.yml
+      - uses: ./.github/workflows/auto-build.yml
         id: auto-build
 
       - run: echo "${{ steps.auto-build.outputs.build_result }}"
