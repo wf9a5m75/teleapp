@@ -1,6 +1,10 @@
 name: TelApp CI/CD
 on:
   workflow_call:
+    outputs:
+      build_result:
+        description: "ビルドしたファイルをアップロードしたartifact id"
+        value: ${{ jobs.test-and-build.outputs.build_result }}
 
 jobs:
   test-and-build:
