@@ -36,7 +36,9 @@ jobs:
         run: npm run test:prod
 
       - name: アプリケーションをビルド
-        run: npm run test:prod
+        run: |
+          npm run test:prod
+          tree public
 
       - name: ビルド結果をアーティファクトにアップロード
         uses: actions/upload-artifact@v3
