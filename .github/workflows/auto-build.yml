@@ -24,25 +24,25 @@ jobs:
           commit_id=$(git log -n 1 --format=%H)
           echo "::set-output name=COMMIT_ID::${commit_id}"
 
-      - name: Node.js環境をセットアップ
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: npm
+      # - name: Node.js環境をセットアップ
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 16
+      #     cache: npm
+      #
+      # - name: 関係モジュールをインストール
+      #   run: npm ci
 
-      - name: 関係モジュールをインストール
-        run: npm ci
-
-      - name: テストを実行
-        run: npm run test:prod
+      # - name: テストを実行
+      #   run: npm run test:prod
 
       - name: アプリケーションをビルド
         id: build
+        shell: bash
         run: |
           BUILD_ID="${{ steps.checkout.outputs.COMMIT_ID }}-build"
           PROJ_NAME=$(jq -r ".defaultProject" angular.json)
           OUT_DIR=$(jq -r ".projects.\"${PROJ_NAME}\".architect.build.options.outputPath")
-          npm run build:prod
 
           echo "OUT_DIR / ${OUT_DIR}"
           echo "BUILD_ID / ${BUILD_ID}"
@@ -50,8 +50,8 @@ jobs:
           echo "::set-output name=OUT_DIR::${OUT_DIR}"
           echo "::set-output name=BUILD_ID::${BUILD_ID}"
 
-      - name: ビルド結果をアーティファクトにアップロード
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ steps.build.outputs.BUILD_ID }}
-          path: ${{ steps.build.outputs.OUT_DIR }}
+      # - name: ビルド結果をアーティファクトにアップロード
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: ${{ steps.build.outputs.BUILD_ID }}
+      #     path: ${{ steps.build.outputs.OUT_DIR }}
