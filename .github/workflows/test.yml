@@ -6,7 +6,4 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: ./.github/workflows/auto-build.yml
-        id: auto-build
-
-      - run: echo "${{ steps.auto-build.outputs.build_result }}"
+      - run: echo "Hello"
