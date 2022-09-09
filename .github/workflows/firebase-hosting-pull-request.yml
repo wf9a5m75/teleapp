@@ -3,26 +3,34 @@
 
 name: Deploy to Firebase Hosting on PR
 on:
-  # pull_request:
-  workflow_dispatch:
+  pull_request:
+  push:
 
 jobs:
-  build:
-    uses: ./.github/workflows/auto-build.yml
-
-  preview:
-    needs: build
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+  one:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Download the product files
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ needs.build.outputs.BUILD_ID }}
-
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MK_TEST_EE4D9 }}'
-          projectId: mk-test-ee4d9
+      - name: Dump GitHub context
+        run: |
+          echo "${GITHUB_REF}"
+          PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+          echo "PR_NUMBER=${PR_NUMBER}"
+  # build:
+  #   uses: ./.github/workflows/auto-build.yml
+  #
+  # preview:
+  #   needs: build
+  #   if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+  #   runs-on: ubuntu-latest
+  #
+  #   steps:
+  #     - name: Download the product files
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: ${{ needs.build.outputs.BUILD_ID }}
+  #
+  #     - uses: FirebaseExtended/action-hosting-deploy@v0
+  #       with:
+  #         repoToken: '${{ secrets.GITHUB_TOKEN }}'
+  #         firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MK_TEST_EE4D9 }}'
+  #         projectId: mk-test-ee4d9
