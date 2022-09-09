@@ -37,7 +37,6 @@ jobs:
 
       - name: アプリケーションをビルド
         id: build
-        shell: bash
         run: |
           BUILD_ID="${{ steps.checkout.outputs.COMMIT_ID }}-build"
           PROJ_NAME=$(jq -r ".defaultProject" angular.json)
