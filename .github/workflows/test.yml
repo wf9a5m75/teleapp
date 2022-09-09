@@ -13,4 +13,4 @@ jobs:
 
     steps:
 
-      - run: echo "${{ jobs.job1.outputs.build_result }}"
+      - run: echo "${{ needs.job1.outputs.build_result }}"
