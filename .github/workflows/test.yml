@@ -4,16 +4,13 @@ on:
 
 jobs:
   job1:
+    uses: ./.github/workflows/auto-build.yml
+
+  job2:
+    needs: job1
+
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
 
-      - run: |
-        ls -la
-        tree
-
-      - uses: ./.github/workflows/auto-build.yml
-        id: auto-build
-
-      - run: echo "${{ steps.auto-build.outputs.build_result }}"
+      - run: echo "${{ jobs.job1.outputs.build_result }}"
