@@ -6,31 +6,31 @@ on:
   pull_request:
 
 jobs:
-  on_pr:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: |
-          FIRST_COMMIT_ID=$(echo "$GITHUB_CONTEXT" | jq -r ".event.pull_request.base.sha")
-          echo "FIRST_COMMIT_ID=$FIRST_COMMIT_ID"
-  # build:
-  #   uses: ./.github/workflows/auto-build.yml
-  #
-  # preview:
-  #   needs: build
-  #   if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+  # on_pr:
   #   runs-on: ubuntu-latest
-  #
   #   steps:
-  #     - name: Download the product files
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: ${{ needs.build.outputs.BUILD_ID }}
-  #
-  #     - uses: FirebaseExtended/action-hosting-deploy@v0
-  #       with:
-  #         repoToken: '${{ secrets.GITHUB_TOKEN }}'
-  #         firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MK_TEST_EE4D9 }}'
-  #         projectId: mk-test-ee4d9
+  #     - name: Dump GitHub context
+  #       env:
+  #         GITHUB_CONTEXT: ${{ toJson(github) }}
+  #       run: |
+  #         FIRST_COMMIT_ID=$(echo "$GITHUB_CONTEXT" | jq -r ".event.pull_request.base.sha")
+  #         echo "FIRST_COMMIT_ID=$FIRST_COMMIT_ID"
+  build:
+    uses: ./.github/workflows/auto-build.yml
+
+  preview:
+    needs: build
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download the product files
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.build.outputs.BUILD_ID }}
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MK_TEST_EE4D9 }}'
+          projectId: mk-test-ee4d9
