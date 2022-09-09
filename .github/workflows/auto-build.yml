@@ -44,6 +44,9 @@ jobs:
           OUT_DIR=$(jq -r ".projects.\"${PROJ_NAME}\".architect.build.options.outputPath")
           npm run build:prod
 
+          echo "OUT_DIR / ${OUT_DIR}"
+          echo "BUILD_ID / ${BUILD_ID}"
+
           echo "::set-output name=OUT_DIR::${OUT_DIR}"
           echo "::set-output name=BUILD_ID::${BUILD_ID}"
 
@@ -51,4 +54,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.build.outputs.BUILD_ID }}
-          path: ${{ steps.build.outputs.OUT_DIR }}/*
+          path: ${{ steps.build.outputs.OUT_DIR }}
