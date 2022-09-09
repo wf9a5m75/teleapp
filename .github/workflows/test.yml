@@ -1,11 +1,10 @@
 name: TelApp CI/CD
-on:
-  workflow_dispatch:
+on: [workflow_dispatch]
 
 jobs:
   job1:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: ./.github/workflows/auto-build.yml
         id: auto-build
