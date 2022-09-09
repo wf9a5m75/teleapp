@@ -13,6 +13,9 @@ jobs:
     outputs:
       BUILD_ID: ${{ steps.build.outputs.BUILD_ID }}
 
+    env:
+      GITHUB_CONTEXT: ${{ toJson(github) }}
+
     steps:
       - name: リポジトリをチェックアウト
         uses: actions/checkout@v3
@@ -20,7 +23,8 @@ jobs:
       - name: コミットIDを取得
         id: checkout
         run: |
-          commit_id=$(git log -n 1 --format=%H)
+          commit_id=$(echo "$GITHUB_CONTEXT" | jq -r ".event.pull_request.base.sha")
+          echo "FIRST_COMMID_ID=${commit_id}"
           echo "::set-output name=COMMIT_ID::${commit_id}"
 
       - name: Node.js環境をセットアップ
