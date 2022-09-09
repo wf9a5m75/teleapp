@@ -7,22 +7,28 @@ name: Deploy to Firebase Hosting on merge
     branches:
       - main
 jobs:
-  build:
-    uses: ./.github/workflows/auto-build.yml
-
-  deploy:
-    needs: build
-
+  job1:
     runs-on: ubuntu-latest
-    steps:
-      - name: Download the product files
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ needs.build.outputs.BUILD_ID }}
 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MK_TEST_EE4D9 }}'
-          channelId: live
-          projectId: mk-test-ee4d9
+    steps:
+      -name: print environment variables
+       run: echo "$GITHUB_CONTEXT"
+  # build:
+  #   uses: ./.github/workflows/auto-build.yml
+  #
+  # deploy:
+  #   needs: build
+  #
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Download the product files
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: ${{ needs.build.outputs.BUILD_ID }}
+  #
+  #     - uses: FirebaseExtended/action-hosting-deploy@v0
+  #       with:
+  #         repoToken: '${{ secrets.GITHUB_TOKEN }}'
+  #         firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MK_TEST_EE4D9 }}'
+  #         channelId: live
+  #         projectId: mk-test-ee4d9
