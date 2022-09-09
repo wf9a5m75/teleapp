@@ -8,31 +8,25 @@ name: Deploy on merge
       - main
 
 jobs:
-  on_merge:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
+        id: context
         run: |
           FIRST_COMMIT_ID=$(echo "$GITHUB_CONTEXT" | jq -r ".event.pull_request.base.sha")
-          echo "FIRST_COMMIT_ID=$FIRST_COMMIT_ID"
-  # build:
-  #   uses: ./.github/workflows/auto-build.yml
-  #
-  # deploy:
-  #   needs: build
-  #
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Download the product files
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: ${{ needs.build.outputs.BUILD_ID }}
-  #
-  #     - uses: FirebaseExtended/action-hosting-deploy@v0
-  #       with:
-  #         repoToken: '${{ secrets.GITHUB_TOKEN }}'
-  #         firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MK_TEST_EE4D9 }}'
-  #         channelId: live
-  #         projectId: mk-test-ee4d9
+          echo "::set-output name=FIRST_COMMIT_ID::$FIRST_COMMIT_ID"
+
+      - name: Download the product files
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ steps.context.outputs.FIRST_COMMIT_ID }}
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MK_TEST_EE4D9 }}'
+          channelId: live
+          projectId: mk-test-ee4d9
