@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: ./.github/workflows/auto-build.yml
+      - uses: wf9a5m75/teleapp/.github/workflows/auto-build.yml
         id: auto-build
 
       - run: echo "${{ steps.auto-build.outputs.build_result }}"
