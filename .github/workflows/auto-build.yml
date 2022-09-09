@@ -20,13 +20,6 @@ jobs:
       - name: リポジトリをチェックアウト
         uses: actions/checkout@v3
 
-      - name: コミットIDを取得
-        id: checkout
-        run: |
-          commit_id=$(echo "$GITHUB_CONTEXT" | jq -r ".event.pull_request.base.sha")
-          echo "FIRST_COMMID_ID=${commit_id}"
-          echo "::set-output name=COMMIT_ID::${commit_id}"
-
       - name: Node.js環境をセットアップ
         uses: actions/setup-node@v3
         with:
@@ -42,7 +35,7 @@ jobs:
       - name: アプリケーションをビルド
         id: build
         run: |
-          BUILD_ID="${{ steps.checkout.outputs.COMMIT_ID }}-build"
+          BUILD_ID="${{ github.sha }}-build"
           PROJ_NAME=$(jq -r ".defaultProject" angular.json)
           OUT_DIR=$(jq -r ".projects.\"${PROJ_NAME}\".architect.build.options.outputPath" angular.json)
           npm run build:prod
