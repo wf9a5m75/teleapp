@@ -1,12 +1,10 @@
 name: TelApp CI/CD
 on:
-  push:
-  workflow_dispatch:
   workflow_call:
     outputs:
-      build_result:
+      BUILD_ID:
         description: "ビルドしたファイルをアップロードしたartifact id"
-        value: ${{ jobs.test-and-build.outputs.build_result }}
+        value: ${{ jobs.test-and-build.outputs.BUILD_ID }}
 
 jobs:
   test-and-build:
@@ -46,11 +44,11 @@ jobs:
           OUT_DIR=$(jq -r ".projects.\"${PROJ_NAME}\".architect.build.options.outputPath" angular.json)
           npm run build:prod
 
-          echo "::set-output name=OUT_DIR::${OUT_DIR}"
+          mv ${OUT_DIR} public
           echo "::set-output name=BUILD_ID::${BUILD_ID}"
 
       - name: ビルド結果をアーティファクトにアップロード
         uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.build.outputs.BUILD_ID }}
-          path: ${{ steps.build.outputs.OUT_DIR }}/*
+          path: public
