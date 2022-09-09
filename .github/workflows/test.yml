@@ -10,8 +10,8 @@ jobs:
       - uses: actions/checkout@v3
 
       - run: |
-        ls -la
-        tree
+          ls -la
+          tree
 
       - uses: ./.github/workflows/auto-build.yml
         id: auto-build
