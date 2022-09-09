@@ -51,7 +51,6 @@ describe('BackButtonComponent', () => {
   it ('1回押したら、btnClickイベントが1回だけ発生するか', async () => {
 
     const btnClickSpy = spyOn(component.btnClick, 'emit');
-    btnClickSpy.calls.reset();
 
     component.enable = true;
 
@@ -83,7 +82,6 @@ describe('BackButtonComponent', () => {
   it ('長押ししたら、btnLongClickイベントが発生するか', async () => {
 
     const btnClickSpy = spyOn(component.btnLongClick, 'emit');
-    btnClickSpy.calls.reset();
 
     component.enable = true;
 
@@ -108,4 +106,32 @@ describe('BackButtonComponent', () => {
     expect(btnClickSpy).toHaveBeenCalledWith('LongBackspace');
 
   });
+
+  it('disableのとき、btnClickイベントが発生しないか', async () => {
+    const btnClickSpy = spyOn(component.btnClick, 'emit');
+    btnClickSpy.calls.reset();
+
+    component.enable = false;
+
+    // テストフレームワークに変化が起こる旨を通知する
+    fixture.detectChanges();
+
+    // <button>をクリックする
+    svgElement.dispatchEvent(new MouseEvent('mousedown'));
+
+    // AngularがHTMLをレンダリングするまで待つ
+    await fixture.whenStable();
+    await wait(150);
+
+    // テストフレームワークに変化が起こる旨を通知する
+    fixture.detectChanges();
+
+    svgElement.dispatchEvent(new MouseEvent('mouseup'));
+    // AngularがHTMLをレンダリングするまで待つ
+    await fixture.whenStable();
+    await wait(150);
+
+    expect(btnClickSpy).toHaveBeenCalledTimes(0);
+  });
+
 });

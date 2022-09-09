@@ -37,7 +37,7 @@ export class AppComponent implements AfterViewInit {
   showWarnMessage: boolean = false;
 
 
-  @HostListener('window:keyup', ['$event'])
+  @HostListener('window:keydown', ['$event'])
   keyEvent(event: KeyboardEvent) {
     const key: string = event.key!;
     if (key in this.buttons) {
