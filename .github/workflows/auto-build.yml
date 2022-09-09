@@ -1,5 +1,6 @@
 name: TelApp CI/CD
 on:
+  workflow_dispatch:
   workflow_call:
     outputs:
       build_result:
@@ -33,15 +34,18 @@ jobs:
         run: npm ci
 
       - name: テストを実行
-        run: npm run test:prod
+       run: npm run test:prod
 
       - name: アプリケーションをビルド
+        id: build
         run: |
-          npm run test:prod
-          tree public
+          PROJ_NAME=$(jq -r ".defaultProject" angular.json)
+          OUT_DIR=$(jq -r ".projects.\"${PROJ_NAME}\".architect.build.options.outputPath")
+          npm run build:prod
+          echo "::set-output name=OUT_DIR::${OUT_DIR}"
 
       - name: ビルド結果をアーティファクトにアップロード
         uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.checkout.outputs.COMMIT_ID }}-build
-          path: ./public/
+          path: ${{ steps.build.outputs.OUT_DIR }}/*
