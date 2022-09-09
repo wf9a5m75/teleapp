@@ -44,14 +44,14 @@ jobs:
           OUT_DIR=$(jq -r ".projects.\"${PROJ_NAME}\".architect.build.options.outputPath" angular.json)
           npm run build:prod
 
-          mv ${OUT_DIR} public
+          mv ${OUT_DIR} dist/public
           echo "::set-output name=BUILD_ID::${BUILD_ID}"
 
       - name: ビルド結果をアーティファクトにアップロード
         uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.build.outputs.BUILD_ID }}
-          path: public
+          path: dist
 
       - name: firebase.jsonをアーティファクトにアップロード
         uses: actions/upload-artifact@v3
