@@ -12,7 +12,7 @@ jobs:
 
     steps:
       -name: print environment variables
-       run: echo "$GITHUB_CONTEXT"
+        run: echo "$GITHUB_CONTEXT"
   # build:
   #   uses: ./.github/workflows/auto-build.yml
   #
