@@ -42,13 +42,9 @@ jobs:
         shell: bash
         run: |
           BUILD_ID="${{ steps.checkout.outputs.COMMIT_ID }}-build"
-          which jq
           PROJ_NAME=$(jq -r ".defaultProject" angular.json)
-          echo "$PROJ_NAME"
           OUT_DIR=$(jq -r ".projects.\"${PROJ_NAME}\".architect.build.options.outputPath" angular.json)
-
-          echo "OUT_DIR / ${OUT_DIR}"
-          echo "BUILD_ID / ${BUILD_ID}"
+          npm run build:prod
 
           echo "::set-output name=OUT_DIR::${OUT_DIR}"
           echo "::set-output name=BUILD_ID::${BUILD_ID}"
@@ -57,4 +53,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.build.outputs.BUILD_ID }}
-          path: ${{ steps.build.outputs.OUT_DIR }}
+          path: ${{ steps.build.outputs.OUT_DIR }}/*
