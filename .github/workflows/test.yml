@@ -4,6 +4,8 @@ on:
 
 jobs:
   job1:
+    runs-on: ubuntu-latest
+    
     steps:
       - uses: ./.github/workflows/auto-build.yml
         id: auto-build
