@@ -18,16 +18,6 @@ describe('AppComponent', () => {
       }, ms);
     });
   };
-  //
-  // const clearInput = async () => {
-  //   // すべて消す
-  //   while(display.value.length > 0) {
-  //     fixture.detectChanges();
-  //     backButton.click();
-  //     await fixture.whenStable();
-  //     await wait(100);
-  //   }
-  // };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -55,20 +45,12 @@ describe('AppComponent', () => {
     display = app.display;
   });
 
-  // beforeEach(function() {
-  //   jasmine.clock().install();
-  // });
-  //
-  // afterEach(function() {
-  //   jasmine.clock().uninstall();
-  // });
-
   it('インスタンスが作成されるか', () => {
     expect(app).toBeTruthy();
   });
 
+
   it("入力した順序（バックボタンを含む）通りに電話番号が構成されるか", async () => {
-    // clearInput();
 
     // 078-265-1111 と入力して、dispplay.value が同じになっているか
     const keys1 = ['0','7','8','2','6','5','1','1','1','1'];
@@ -101,11 +83,9 @@ describe('AppComponent', () => {
     }
     expect(display.value).toBe("0749-63-0000#123");
 
-
   });
 
   it("無効な電話番号を入力されたとき、「無効な電話番号です」が表示されるか", async () => {
-    // clearInput();
 
     const keys1 = ['1','1','9','#'];
     for (let i = 0; i < keys1.length; i++) {
@@ -120,9 +100,6 @@ describe('AppComponent', () => {
 
   it("有効な電話番号のとき、CallButtonが enable になるか", async () => {
     const alertSpy = spyOn(window, 'alert');
-    alertSpy.calls.reset();
-
-    // clearInput();
 
     const keys1 = ['0','7','8','2','6','5','1','1','1','1'];
     for (let i = 0; i < keys1.length; i++) {
@@ -145,9 +122,6 @@ describe('AppComponent', () => {
 
   it("無効な電話番号のとき、CallButtonが disable になるか", async () => {
     const alertSpy = spyOn(window, 'alert');
-    alertSpy.calls.reset();
-
-    // clearInput();
 
     const keys1 = ['0','7','8','#','2','6','5','1','1','1','1'];
     for (let i = 0; i < keys1.length; i++) {
@@ -170,7 +144,6 @@ describe('AppComponent', () => {
 
   it("無効な電話番号のとき、enableになるか", async () => {
     const alertSpy = spyOn(window, 'alert');
-    alertSpy.calls.reset();
 
     // clearInput();
 
@@ -192,4 +165,28 @@ describe('AppComponent', () => {
     await wait(100);
     expect(window.alert).toHaveBeenCalledTimes(0);
   });
+
+
+  it("キー操作が正しいかどうか", async () => {
+    const onButtonClickSpy = spyOn(app, 'onButtonClick');
+
+
+    const keys = ['0','7','8','2','6','5','1','3','4','9','#','*'];
+    for (let i = 0; i < keys.length; i++) {
+      const spy = spyOn(buttons[keys[i]], 'click');
+      window.dispatchEvent(new KeyboardEvent('keydown', {
+        key: keys[i],
+      }));
+      expect(spy).toHaveBeenCalled();
+    }
+
+    const backSpy = spyOn(backButton, 'click');
+    window.dispatchEvent(new KeyboardEvent('keydown', {
+      key: 'Backspace',
+    }));
+    expect(backSpy).toHaveBeenCalled();
+
+
+  });
+
 });
