@@ -1,4 +1,4 @@
-name: test
+name: TelApp CI/CD
 on:
   workflow_dispatch:
 
