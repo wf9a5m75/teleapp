@@ -1,0 +1,11 @@
+name: test
+on:
+  workflow_dispatch:
+
+jobs:
+  job1:
+    steps:
+      - uses: ./.github/workflows/auto-build.yml
+        id: auto-build
+
+      - run: echo "${{ steps.auto-build.outputs.build_result }}"
